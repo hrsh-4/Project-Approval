@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block head %}
+
+{% if user.is_authenticated and faculty and not hod %}
+
+<li class="nav-item">
+  <a class="nav-link " href="/coordinator-projects/">Class Projects</a>
+</li>
+
+<li class="nav-item">
+  <a class="nav-link " href="/project-approval-by-mentor/">Approve Projects</a>
+</li>
+{% endif %}
+
+{% endblock %}
+{% block content %}
+<link href="https://fonts.googleapis.com/css?family=Spartan&display=swap" rel="stylesheet">
+<style media="screen">
+
+  body{
+    background :   fixed url("https://wallpaperboat.com/wp-content/uploads/2019/05/star-wars-minimalist-026.jpg");
+    background-size : 1440px 1080px;
+    font-family: 'Spartan', sans-serif;
+    color:white;
+  }
+  p{
+    color : white;
+    font-size : 90px;
+    font-weight : 4000;
+  }
+
+</style>
+<br><br><br><br>
+<br>
+<div align='center' class="container">
+<br>
+  {% if not user.is_authenticated %}
+      <h1 style="font-size : 60px">Hey, please login or register to start using this platform</h1>
+  {% elif user.is_authenticated and not hod  %}
+    <h1 style = 'font-size : 80px;margin : -60px 0 0 0'>My Project</h1><br>
+    <!-- <h1 style='font-size : 80px;'>{{my_project}}</h1> -->
+      {% for project in my_project %}
+        <h1 style='font-size: 60px'>{{project.title}}</h1>
+        <h3>By : {{project.group.group_name}}</h3>
+        <h5 ><i>{{project.description}}</i></h5>
+        {% if project.is_approved_by_mentor %}
+          <b> Your project has been approved by your mentor.</b>
+        {% else %}
+          <b>  Your project has not been approved by your mentor.</b>
+        {% endif %}
+        <br>
+        {% if project.is_approved_by_HOD %}
+          <b>  Your project has been approved by your HOD.</b>
+        {% else %}
+            <b>  Your project has not been approved by your HOD.</b>
+        {% endif %}
+        <br><br>
+       {% endfor %}
+
+   {% endif %}
+
+   {% if user.is_authenticated and hod %}
+
+   {% for project in my_project %}
+
+     {% if project.is_approved_by_mentor %}
+     <h1 style='font-size: 60px'>{{project.title}}</h1>
+     <h3>By : {{project.group.group_name}}</h3>
+     <h5 ><i>{{project.description}}</i></h5>
+
+     <br>
+     {% if project.is_approved_by_HOD %}
+       <b>  The project, {{project.title}}  has been approved by  HOD.</b>
+     {% else %}
+         <b>  The project , {{project.title}} has not been approved by  HOD.</b>
+     {% endif %}
+     <br><br>
+     {% endif %}
+    {% endfor %}
+
+{% endif %}
+
+
+</div>
+
+
+
+{% endblock %}

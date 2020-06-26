@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container " align='center'>
+
+  <form  class="form-group"  method="post">
+    {% csrf_token %}
+    <h1 style="color:#feda6a;font-size:4em"> Enter Project Details</h1>
+  
+    <h3 style="color:#feda6a">{{project_form.title|as_crispy_field}}</h3>
+    <h3 style="color:#feda6a">{{project_form.description|as_crispy_field}}</h3>
+    <input class="btn btn-warning" type="submit" name="project" value="Submit">
+  </form>
+
+</div>
+
+{% endblock %}

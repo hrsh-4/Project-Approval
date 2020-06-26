@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style media="screen">
+
+</style>
+
+  <div id='login' class="container" align='center' >
+    <h1 style="font-weight : 600 ;color:#feda6a">Please login  </h1>
+    <form style="background:#3a4660;border:0px" class="from-group form-control"  method="post">
+      {% csrf_token %}
+      <label for="username"> <b style="color:#feda6a">Username</b>  </label>
+      <input style="max-width : 40%"  class="form-control" type="text" name="username" value="" placeholder="Enter username  "><br>
+      <label for="password"> <b style="color:#feda6a">Password</b>  </label>
+      <input style="max-width : 40%" class="form-control" type="password" name="password" value="" placeholder="Enter password  " ><br>
+      <input style="hover::background:#feda6a" class="btn btn-outline-warning" type="submit" name="" value="Login">
+    </form>
+
+  </div>
+
+
+{% endblock %}

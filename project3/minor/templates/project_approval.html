@@ -1,0 +1,57 @@
+{% include 'base.html' %}
+
+{% block content %}
+
+<div align='center' class="container">
+
+
+
+    {% if user.is_authenticated and not hod %}
+    <h1>MENTOR APPROVAL</h1>
+    {% for project in my_project %}
+
+    <form class="form-group" method="post">
+      {% csrf_token %}
+
+        <h1>{{project.title}}</h1>
+        <b><i>By : {{project.group}}</i></b><br>
+        <i>  {{project.description}}</i>
+        <br>
+        {% if project.is_approved_by_mentor %}
+          <input class="btn btn-info" disabled type="submit" name="" value="Approved">
+        {% else %}
+        Approve : <input class="btn btn-outline-info" type="radio" name="is_approved_by_mentor" value="Approve"><br><br>
+        <input class="btn btn-outline-info" type="submit" value="Approve">
+
+          {% endif %}
+    </form>
+
+    {% endfor %}
+    {% elif user.is_authenticated and hod%}
+    <h1>HOD APPROVAL </h1>
+    {% for project in my_project %}
+      {% if project.is_approved_by_mentor %}
+
+          <form class="form-group" method="post">
+            {% csrf_token %}
+
+              <h1>{{project.title}}</h1>
+              <b><i>By : {{project.group}}</i></b><br>
+              <i>  {{project.description}}</i>
+              <br>
+              {% if project.is_approved_by_hod %}
+                <input class="btn btn-info" disabled type="submit" name="" value="Approved">
+              {% else %}
+              Approve : {{project_approval_by_hod_form}}
+              <input class="btn btn-outline-info" type="submit" value="Approve">
+
+                {% endif %}
+          </form>
+      {% endif %}
+    {% endfor %}
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+<style media="screen">
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600');
+/* html{
+  scroll-behavior: smooth; */
+/* } */
+body{
+   margin:0;
+   font-family: 'Montserrat', sans-serif;
+     scroll-behavior: smooth;
+     background:#3a4660;
+
+}
+
+
+span{
+  color:gray;
+}
+li{
+  color:#feda6a;
+}
+</style>
+
+  </head>
+  <body>
+    <nav style="color:white" style="" class="navbar navbar-expand-lg navbar-dark bg-black">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a style="color:#feda6a" class="navbar-brand" href="/"> <span style="color:#feda6a">Home</span> </a>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+
+      {% if user.is_authenticated %}
+      <li  class="nav-item">
+        <a class="nav-link " href=""><span style="color:#feda6a">Hey, <b>{{user.username}}</b> </span></a>
+      </li>
+
+      <li class="nav-item">
+        <a style="color:#feda6a;" class="nav-link " href="/"><span style="color:#feda6a">My Projects</span></b> </a>
+      </li>
+
+      {% block head %}
+
+      {% endblock %}
+      {% else %}
+      <li class="nav-item">
+        <a style="color:#feda6a;" class="nav-link" href="/group-registration/">Register as group</a>
+      </li>
+      <li class="nav-item">
+        <a style="color:#feda6a" class="nav-link " href="/faculty-registration/">Register as faculty</a>
+      </li>
+
+      <li class="nav-item">
+        <a style="color:#feda6a" class="nav-link " href="/login/">Login</a>
+      </li>
+      {% endif %}
+    </ul>
+
+    {% if user.is_authenticated %}
+    <ul class="navbar-nav" >
+      <li class=" nav-item " style="margin-left : -150px">  <a class="nav-link  btn btn-outline-default my-2 my-sm-0 " href="/logout/"><span style="color:#feda6a"><b>Logout</b></span> </a></li>
+    </ul>
+    {% endif %}
+  </div>
+</nav>
+
+
+  {% block content %}
+
+  {% endblock %}
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>

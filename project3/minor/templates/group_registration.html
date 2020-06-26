@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<style media="screen">
+  input[type=number] {
+  -moz-appearance: textfield;
+
+  h3,p{
+    color:#feda6a
+  }
+}
+</style>
+
+  <div id='register' class="container" align='center'>
+
+
+      {% if registered %}
+        <h3 style="color:#feda6a">Thank you for registering as a group!!!! <br>
+          Please Login to use the platform..
+        </h3>
+      {% else %}
+    <h1  style="color:#feda6a ;font-size : 60px; font-weight : 600">Group Registration </h1>
+<br>
+    <form class ='form-group'  method="post">
+      {% csrf_token %}
+      <h3 style="color:#feda6a">Registration Credentials</h3><br>
+      <div class="form-row">
+
+        <div style="color:#feda6a" class="form-group col-md-4 mb-0">
+          {{user_form.username|as_crispy_field }}
+        </div>
+    <div style="color:#feda6a" class="form-group col-md-4 mb-0">
+    {{user_form.email|as_crispy_field }}
+    </div>
+    <div style="color:#feda6a" class="form-group col-md-4 mb-0">
+      {{user_form.password|as_crispy_field }}
+    </div>
+  </div>
+  <hr>
+
+<h3 style="color:#feda6a">Institutional Details</h3><br>
+  <div class="form-row">
+
+    <div style="color:#feda6a" class="form-group col-md-3 mb-0">
+    {{group_form.department|as_crispy_field }}
+    </div>
+    <div style="color:#feda6a" class="form-group col-md-3 mb-0">
+    {{group_form.year|as_crispy_field }}
+    </div>
+    <div style="color:#feda6a" class="form-group col-md-3 mb-0">
+    {{group_form.section|as_crispy_field }}
+    </div>
+    <div style="color:#feda6a" class="form-group col-md-3 mb-0" aria-describedby="emailHelp">
+    {{group_form.mentor|as_crispy_field }}
+    <small style="color:#feda6a" id="emailHelp" class="form-text text-muted">Please select mentor from your department, or else you won't be able to register with this username.</small>
+    </div>
+
+  </div>
+  <hr>
+  <h3 style="color:#feda6a">Group Details</h3>
+    <div style="color:#feda6a" class="container" style="max-width  : 30%">
+      {{group_form.group_name|as_crispy_field }}
+
+    </div>
+
+        <div class="form-row">
+
+          <div style="color:#feda6a" class="form-group col-md-6 mb-0">
+          {{group_form.member_1_name|as_crispy_field }}
+          </div>
+          <div style="color:#feda6a" class="form-group col-md-6 mb-0">
+          {{group_form.member_1_enrollment|as_crispy_field }}
+          </div>
+
+        </div>
+
+        <div class="form-row">
+
+          <div style="color:#feda6a" class="form-group col-md-6 mb-0">
+          {{group_form.member_2_name|as_crispy_field }}
+          </div>
+          <div style="color:#feda6a" class="form-group col-md-6 mb-0">
+          {{group_form.member_2_enrollment|as_crispy_field }}
+          </div>
+
+        </div>
+
+        <div class="form-row">
+
+          <div style="color:#feda6a" class="form-group col-md-6 mb-0">
+          {{group_form.member_3_name|as_crispy_field }}
+          </div>
+          <div style="color:#feda6a" class="form-group col-md-6 mb-0">
+          {{group_form.member_3_enrollment|as_crispy_field }}
+          </div>
+
+        </div>
+
+      <div style="color:#feda6a" class="" style="max-width : 30%">
+        {{group_form.contact|as_crispy_field }}
+      </div>
+
+
+      <input class="btn btn-outline-warning" type="submit" name="" value="Register">
+    </form>
+
+      {% endif %}
+
+
+  </div>
+{% endblock %}

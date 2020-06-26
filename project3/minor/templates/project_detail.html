@@ -1,0 +1,232 @@
+
+
+{% extends 'base.html' %}
+{% block head %}
+{% if not hod %}
+<li class="nav-item">
+   <a style="color:#feda6a" data-toggle="modal" href="#myModal" class="nav-link">Messages </a>
+</li>
+<div style="color:green" class="modal" id="myModal">
+   <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">Messages</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+         </div>
+         <div class="container"></div>
+         <div align='center' class="modal-body">
+            <a data-toggle="modal" href="#myModal2" class="btn btn-primary">Sent Messages</a>
+            <a data-toggle="modal" href="#myModal3" class="btn btn-primary">Received Messages</a>
+         </div>
+         <div class="modal-footer">
+            <a href="#" data-dismiss="modal" class="btn">Close</a>
+            <a href="#" class="btn btn-primary">Save changes</a>
+         </div>
+      </div>
+   </div>
+</div>
+<div style="color:green" class="modal" id="myModal2" data-backdrop="static">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">Sent Messages</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+         </div>
+         <div class="container"></div>
+         <div class="modal-body">
+            {% if faculty %}
+            {% if project.mentor_message %}
+            {{project.mentor_message|linebreaks}}
+            {% else %}
+            <h3>No messages!!!!</h3>
+            {% endif %}
+            {% else %}
+            {% if project.group_message %}
+            {{project.group_message|linebreaks}}
+            {% else %}
+            <h3>No messages!!!</h3>
+            {% endif %}
+            {% endif %}
+         </div>
+         <div class="modal-footer">
+            <a href="#" data-dismiss="modal" class="btn">Close</a>
+            <a href="#" class="btn btn-primary">Save changes</a>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+<div style="color:green" class="modal" id="myModal3" data-backdrop="static">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">Received Messages</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+         </div>
+         <div class="container"></div>
+         <div class="modal-body">
+            {% if faculty %}
+            {% if project.group_message %}
+            {{project.group_message|linebreaks}}
+            {% else %}
+            <h3>No messages!!!!</h3>
+            {% endif %}
+            {% else %}
+            {% if project.mentor_message %}
+            {{project.mentor_message|linebreaks}}
+            {% else %}
+            <h3>No messages!!!</h3>
+            {% endif %}
+            {% endif %}
+         </div>
+         <div class="modal-footer">
+            <a href="#" data-dismiss="modal" class="btn">Close</a>
+            <a href="#" class="btn btn-primary">Save changes</a>
+         </div>
+      </div>
+   </div>
+</div>
+{% endif %}
+{% endblock %}
+{% block content %}
+<style media="screen">
+   @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600');
+   body{
+   margin:0;
+   background: ;
+   font-family: 'Montserrat',sans-serif;
+   }
+   .blue-container{
+   width: 100%;
+   background: #feda6a;
+   color:#3a4660;
+   margin-top: 5%;
+   padding-top: 2%;
+   padding-bottom: 0.5%;
+   border-top-left-radius: 40px;
+   border-bottom-right-radius : 50px;
+   }
+   p,blockquote{
+   font-size: 0.9em;
+   line-height: 1.6em;
+   font-weight: 600;
+   }
+   ul{
+   list-style: none;
+   margin: 0;
+   padding: 0;
+   }
+   .details{
+   width: 100%;
+   background: rgb(30,43,46);
+   color:beige;
+   margin-top: 5%;
+   padding-top: 2%;
+   padding-bottom: 0.5%;
+   border-top-left-radius: 40px;
+   border-bottom-right-radius : 50px;
+   }
+   input, text{
+   border-radius :40px;
+   }
+</style>
+<div class="container " align='center'>
+<h1 style="color: #feda6a; font-size : 5em;">Project Details</h1>
+<div class="blue-container">
+   <div class="container">
+      <ul >
+
+         <li>
+            <h1 style="color: #3a4660; font-size : 4em;">{{project.title}}</h1>
+         </li>
+         <li>
+            <h1 style="color: #3a4660; font-size : 24px;">Year :  {{project.group.year}} <br> Section : {{project.group.section}}</h1>
+         </li>
+         <li>
+            <p style="color: #3a4660; font-size : 18px">{{project.description}}</p>
+         </li>
+      </ul>
+   </div>
+   </div
+   <br>
+   <div class="details container ">
+      <ul>
+         <p>Project Status : {{project.status}}</p>
+         <p>Mentor Feedback : {{project.mentor_feedback}}</p>
+         <p>HOD Feedback : {{project.hod_feedback}}</p>
+      </ul>
+   </div>
+   <br><br><br>
+   <!-- WBS : {{project.wbs}} -->
+   {% if user.is_authenticated and faculty %}
+   <!-- /      Mentor :{{project.group.mentor}} -->
+   <!-- MESSAGE FROM GROUP : <b>{{project.group_message|linebreaks}}</b><br> -->
+   <form class="form-group" method="post">
+      {% csrf_token %}
+      <p style="color: #feda6a;" > MENTOR FEEDBACK</p>
+      <input   class="form-control" type="text" name="mentor_feedback" value=""><br>
+      <p style="color: #feda6a;" > MENTOR MESSAGE</p>
+      <div class="">
+         <textarea  class="form-control"  name="mentor_message" rows="8" cols="80"></textarea><br>
+      </div>
+      <input  class="btn btn-outline-success" type="submit" name="" value="Submit">
+   </form>
+   {% if project.is_approved_by_mentor %}
+   <button class="btn btn-info" type="button" value="Approved by mentor">Approved by mentor</button>
+   {% else %}
+   <a type="submit"  class="btn btn-outline-warning" href= "{{ project.mentor_approval }}" value="Approval by mentor">Approval by mentor</a>
+   {% endif %}
+   {% if project.is_approved_by_HOD %}
+   <button class="btn btn-info" type="button" name="">Approved by HOD</button>
+   {% else %}
+   <button class="btn btn-warning" "> Project not approved by HOD</button>
+   {% endif %}
+   {% elif user.is_authenticated and hod %}
+   <form class="form-group" method="post">
+      {% csrf_token %}
+      <p style="color:#feda6a">HOD FEEDBACK</p>
+      <input  class="form-control" type="text" name="hod_feedback" value=""><br>
+      <input  class="btn btn-outline-success" type="submit" name="" value="Submit">
+   </form>
+   {% if project.is_approved_by_HOD %}
+   <button class="btn btn-info" type="button" name="">Approved by HOD</button>
+   {% else %}
+   <a type="submit" class="btn btn-outline-success" href="{{ project.hod_approval }}" value="Approval by HOD">Approval by HOD</a>
+   {% endif %}
+   {% else %}
+   <!-- MENTOR MESSAGE :   <b>{{project.mentor_message|linebreaks}}</b> -->
+   <a class="btn btn-primary" href="{% url 'minor:project_edit' pk=project.pk %}"><span class="glyphicon glyphicon-pencil">Edit Projcet</span></a>
+   <form enctype="multipart/form-data" class="form-group" method="post">
+      {% csrf_token %}
+      <p style="color:#feda6a">WBS</p>
+      <input class="form-control"  type="file" name="wbs" value=""><br>
+      <p style="color:#feda6a">SYNOPSIS</p>
+      <input class="form-control"  type="file" name="synopsis" value=""><br>
+      <p style="color:#feda6a">SRS</p>
+      <input class="form-control"  type="file" name="srs" value=""><br>
+      <p style="color:#feda6a">Project Status</p>
+      <input   class="form-control" type="text" name="project_status" value="" ><br>
+      <p style="color:#feda6a">Message to Mentor</p>
+      <textarea class="form-control" name="group_message" rows="8" cols="80"></textarea>
+      <br>
+      <input  class='btn btn-outline-success' type="submit" name="" value="Update Status">
+   </form>
+   {% if project.is_approved_by_mentor %}
+   <button class="btn btn-info" type="button" value="Approved by mentor">Approved by mentor</button>
+   {% else %}
+   <a type="submit" style="color:#feda6a"  class="btn btn-outline-warning"  value="Approval by mentor">Not approved by Mentor</a>
+   {% endif %}
+   {% if project.is_approved_by_HOD %}
+   <button class="btn btn-info" type="button" name="">Approved by HOD</button>
+   {% else %}
+   <button style="color:#feda6a" class="btn btn-outline-warning" > Project not approved by HOD</button>
+   {% endif %}
+   {% endif %}
+   <br>
+   <br>
+   <a class="btn btn-success" href='{{MEDIA_URL}}{{project.wbs}}'  >Download WBS</a>
+   <a class="btn btn-success" href="{{MEDIA_URL}}{{project.synopsis}}" >SYNOPSIS</a>
+   <a class="btn btn-success" href="{{MEDIA_URL}}{{project.srs}}" >Download SRS</a>
+   <br><br>
+</div>
+{% endblock %}

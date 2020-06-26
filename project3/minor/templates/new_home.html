@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% if user.is_authenticated and  faculty %}
+<li class="nav-item">
+  <a class="nav-link " href="/coordinator-projects/"> <span style="color:#feda6a" >Class Projects</span></a>
+</li>
+
+
+{% endif %}
+
+
+
+{% endblock %}
+
+{% block content %}
+
+<style media="screen">
+
+
+
+.hub {
+  display: block;
+
+  font-weight: bold;
+  font-size: 4em;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+.hub span:nth-child(1){
+  color : white;
+}
+
+.hub span:nth-child(2) {
+  background:  #feda6a;
+  color: #3a4660;
+  border-radius: 1vw;
+  padding: 0vw 1vw 0vw 1vw;
+  display: inline-block;
+}
+.new{
+  background: #3a4660;
+  color:#feda6a;
+  font-weight : 600;
+}
+p{
+  color:#3a4660
+}
+</style>
+
+<div  class="container" align='center'>
+  <br>
+  <div style="margin-bottom:20%;" class="hub">
+  <span>My </span>
+  <span>Projects</span>
+</div>
+<br><br><br><br><br>
+<br><br><br>
+  <br>
+  {% if user.is_authenticated and  faculty %}
+      {% if my_project %}
+        {% for project in my_project %}
+        <div style="border:0.5px solid  #feda6a" class="card ">
+          <h5  style=" background:  #feda6a;color: #000000;font-weight : 600" class="card-header">Project by : {{project.group.group_name}}</h5>
+          <div style="background:#feda6a; color:#3a4660" class="card-body">
+          <h1 style="font-size : 60px" class="card-title">{{project.title}}</h1>
+          <p class="card-text">{{project.description}}</p>
+          <a href="{{project.get_absolute_url}}" class="btn new">Project Details</a>
+          </div>
+</div><hr>
+        {% endfor %}
+      {% else %}
+      <div style="background:#feda6a" class="jumbotron">
+        <h1 style="color:black">YOU HAVE NO PROJECTS</h1>
+
+      </div>
+      {% endif %}
+
+  {% else %}
+    {% if my_project %}
+      {% for project in my_project %}
+        {% if project.user == user %}
+        <div style="border:0.5px solid  #feda6a"  class="card border">
+          <h5 style=" background:  #feda6a;color: #000000;font-weight : 600" class="card-header">Project by : {{project.group.group_name}}</h5>
+          <div style="background:#feda6a; color:#3a4660" class="card-body">
+          <h1  style="font-size : 60px" class="card-title">{{project.title}}</h1>
+          <p class="card-text">{{project.description}}</p>
+          <a href="{{project.get_absolute_url}}" class="btn btn new">Project Details</a>
+          </div>
+  </div>
+      {% endif %}
+      {% endfor %}
+
+    {% else %}
+    <div  style="background:#feda6a" class="jumbotron">
+      <h1>YOU HAVE NO PROJECTS</h1>
+          <a style="background:#feda6a" class="btn btn-outline-warning"  href="/project-form/">Add Project</a>
+    </div>
+
+    {% endif %}
+  {% endif %}
+
+
+  {% if user.is_authenticated and  hod %}
+      {% if my_project %}
+        {% for project in my_project %}
+            {% if project.is_approved_by_mentor %}
+            <div style="border:0.5px solid  #feda6a" class="card border">
+              <h5 style=" background:  #feda6a;color: #000000;font-weight : 600" class="card-header">Project by : {{project.group.group_name}}</h5>
+              <div  style="background:#feda6a; color:#3a4660"  class="card-body">
+              <h1 style="font-size : 60px" class="card-title">{{project.title}}</h1>
+              <p class="card-text">{{project.description}}</p>
+              <a href="{{project.get_absolute_url}}" class="btn btn new">Project Details</a>
+              </div>
+    </div><hr>
+
+            {% endif %}
+        {% endfor %}
+      {% else %}
+      <div class="jumbotron">
+        <h1>YOU HAVE NO PROJECTS</h1>
+      </div>
+      {% endif %}
+  {% endif %}
+
+
+</div>
+
+{% endblock %}

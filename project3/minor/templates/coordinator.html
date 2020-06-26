@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{% if user.is_authenticated or faculty or not hod %}
+
+<li class="nav-item">
+  <a style=" color:  #feda6a;" class="nav-link " href="/coordinator-projects/">Class Projects</a>
+</li>
+
+{% endif %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<style media="screen">
+  .btn-new{
+    background : #ff1f3d;
+    color :white;
+  }
+</style>
+<br>
+<div align='center' class="container">
+<br>
+
+  {% if user.is_authenticated and not hod %}
+    <h1 style = 'font-weight : 600; color:  #feda6a;font-size : 80px;margin : -60px 0 0 0'>My Class Projects</h1><br>
+    <!-- <h1 style='font-size : 80px;'>{{my_project}}</h1> -->
+
+    {% if my_project %}
+    {% for project in my_project %}
+
+    <div style="color:#3a4660; " class="card ">
+      <h5  style=" background:  #feda6a;font-weight : 600" class="card-header">Project by : {{project.group.group_name}}</h5>
+      <div style=" background:  #feda6a;" class="card-body">
+      <h1 style="font-size : 60px" class="card-title">{{project.title}}</h1>
+      <p class="card-text">{{project.description}}</p>
+      <b class="card-text">Status : {{project.status}}</b>
+      <br><br>
+      {% if project.is_approved_by_mentor %}
+        <button class="btn btn-info" type="button" name="button">Approved by mentor</button>
+      {% else %}
+        <button class="btn btn-new" type="button" name="button">Not approved by mentor</button>
+      {% endif %}
+      {% if project.is_approved_by_HOD %}
+        <button class="btn btn-info" type="button" name="button">Approved by mentor</button>
+      {% else %}
+          <button class="btn btn-new" type="button" name="button">Not approved by HOD</button>
+      {% endif %}
+      </div>
+</div><hr>
+<!--
+
+      <h1 style='font-size: 60px'>{{project.title}}</h1>
+      <h3>By : {{project.group.group_name}}</h3>
+      <h5 ><i>{{project.description}}</i></h5>
+      <button class = "btn btn-outline-info" type="button" name="button">{{project.status}}</button><br>
+      {% if project.is_approved_by_mentor %}
+        <b> Your project has been approved by your mentor.</b>
+      {% else %}
+        <b>  Your project has not been approved by your mentor.</b>
+      {% endif %}
+      <br>
+      {% if project.is_approved_by_HOD %}
+        <b>  Your project has been approved by your HOD.</b>
+      {% else %}
+          <b>  Your project has not been approved by your HOD.</b>
+      {% endif %}
+      <br><br> -->
+     {% endfor %}
+
+     {% else %}
+
+     <h1>You have no projects.</h1>
+
+
+    {% endif %}
+
+   {% endif %}
+
+   {% if user.is_authenticated and hod %}
+
+   {% if my_project %}
+   {% for project in my_project %}
+
+     {% if project.is_approved_by_mentor %}
+     <h1 style='font-size: 60px'>{{project.title}}</h1>
+     <h3>By : {{project.group.group_name}}</h3>
+     <h5 ><i>{{project.description}}</i></h5>
+     {% endif %}
+     <br>
+     {% if project.is_approved_by_HOD %}
+       <b>  The project, {{project.title}}  has been approved by  HOD.</b>
+     {% else %}
+         <b>  The project , {{project.title}} has not been approved by  HOD.</b>
+     {% endif %}
+     <br><br>
+    {% endfor %}
+    {% else %}
+
+    <h1>You have no projects</h1>
+
+   {% endif %}
+{% endif %}
+
+
+</div>
+
+
+
+{% endblock %}
